@@ -4,6 +4,15 @@ import "./App.css";
 import * as React from "react";
 import { FileUploader } from "baseui/file-uploader";
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import LoginScreen from "./screens/Login";
+import SignUpScreen from "./screens/SignUp";
+
 const Uploader = () => {
   const [errorMessage, setErrorMessage] = React.useState(
     ""
@@ -13,10 +22,12 @@ const Uploader = () => {
 
 function App() {
   return (
-    <div className='App'>
-      <h1 className='text-4xl text-blue-500'>hello world</h1>
-      <Uploader/>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path='/' component={LoginScreen}></Route>
+        <Route exact path='/register' component={SignUpScreen}></Route>
+      </Switch>
+    </Router>
   );
 }
 
