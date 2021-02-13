@@ -1,17 +1,19 @@
 import * as React from "react";
 import { FileUploader } from "baseui/file-uploader";
-import { StatefulInput } from 'baseui/input';
+
+import { useDispatch } from "react-redux";
+import { upload } from "../redux/actions/userActions";
 
 const Uploader = () => {
+  const dispatch = useDispatch();
 
-  const upload = (e) => {
-    console.log(e)
+  const uploadFile = (file) => {
+    console.log(file)
+    dispatch(upload(file[0]));
   }
 
-  const [errorMessage, setErrorMessage] = React.useState(
-    ""
-  );
-  return <FileUploader errorMessage={errorMessage} />;
+  const [errorMessage, setErrorMessage] = React.useState("");
+  return <FileUploader errorMessage={errorMessage} onDropAccepted={uploadFile}/>;
 }
 
 const HomeScreen = () => {
