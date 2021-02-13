@@ -4,13 +4,19 @@ import {
   USER_AUTH_FAIL,
   USER_UPLOAD_REQUEST,
   USER_UPLOAD_SUCCESS,
-  USER_UPLOAD_FAIL
+  USER_UPLOAD_FAIL,
+  USER_AUTH_REHYDRATE
 } from "../constants/userConstants";
 
 import firebase, { auth, firestore, storage } from "../../firebase/firebase.config";
 
 const users = firestore.collection("users");
 const files = firestore.collection("files");
+
+const getError = error => (
+  error.response && error.response.data.message
+? error.response.data.message
+: error.message) || error
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -23,10 +29,7 @@ export const login = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_AUTH_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
@@ -51,14 +54,10 @@ export const register = (name, email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_AUTH_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: getError(error),
     });
   }
 };
-
 export const upload = (file) => async (dispatch) => {
   try {
     dispatch({ type: USER_UPLOAD_REQUEST });
@@ -86,10 +85,9 @@ export const upload = (file) => async (dispatch) => {
     
     dispatch({ type: USER_UPLOAD_SUCCESS, payload: { fileName, downloadUrl} });
   } catch (error) {
-    dispatch({ type: USER_UPLOAD_FAIL,
-      payload:
-        (error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message) || error})
+    dispatch({ 
+      type: USER_UPLOAD_FAIL,
+      payload: getError(error)
+    });
   }
 };

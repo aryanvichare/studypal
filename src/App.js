@@ -1,16 +1,14 @@
-import logo from "./logo.svg";
 import "./App.css";
 
 import React, { useEffect } from "react";
-import { FileUploader } from "baseui/file-uploader";
 
 import { Client as Styletron } from "styletron-engine-atomic";
 import { Provider as StyletronProvider } from "styletron-react";
 import { LightTheme, BaseProvider } from "baseui";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { auth } from "./firebase/firebase.config";
+import { useDispatch } from "react-redux";
+import { auth, firestore } from "./firebase/firebase.config";
 import LoginScreen from "./screens/Login";
 import SignUpScreen from "./screens/SignUp";
 import HomeScreen from "./screens/Home";
@@ -29,10 +27,9 @@ function App() {
       if (user) {
         dispatch({ type: USER_AUTH_REQUEST });
 
-        const { displayName, email } = user;
-        const userPayload = { displayName, email };
+        const userPayload = await firestore.collection("users").doc(user.email).get()
 
-        dispatch({ type: USER_AUTH_REHYDRATE, payload: userPayload });
+        dispatch({ type: USER_AUTH_REHYDRATE, payload: userPayload.data() });
       }
     });
     return () => unregisterAuthObserver();
