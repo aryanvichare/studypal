@@ -16,6 +16,7 @@ import {
   USER_AUTH_REHYDRATE,
   USER_AUTH_REQUEST,
 } from "./redux/constants/userConstants";
+import LandingScreen from "./screens/Landing";
 
 const engine = new Styletron();
 
@@ -40,7 +41,8 @@ function App() {
       <StyletronProvider value={engine}>
         <BaseProvider theme={LightTheme}>
           <Switch>
-            <Route exact path='/' component={HomeScreen}></Route>
+            <Route exact path='/' component={LandingScreen}></Route>
+            <Route exact path='/upload' component={HomeScreen}></Route>
             <Route exact path='/login' component={LoginScreen}></Route>
             <Route exact path='/register' component={SignUpScreen}></Route>
           </Switch>

@@ -5,6 +5,8 @@ import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
 import "./styles/tailwind.output.css";
+import "./styles/index.css";
+
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
