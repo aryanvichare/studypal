@@ -1,10 +1,10 @@
-import axios from "axios";
 import {
   USER_AUTH_REQUEST,
   USER_AUTH_SUCCESS,
   USER_AUTH_FAIL,
 } from "../constants/userConstants";
 
+import axios from "axios";
 import { auth, firestore } from "../../firebase/firebase.config";
 
 export const login = (email, password) => async (dispatch) => {
@@ -12,9 +12,10 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({ type: USER_AUTH_REQUEST });
 
     const userRecord = await auth.signInWithEmailAndPassword(email, password);
+    const { displayName } = userRecord.user;
 
-    dispatch({ type: USER_AUTH_SUCCESS, payload: userRecord });
-  } catch (err) {
+    dispatch({ type: USER_AUTH_SUCCESS, payload: { displayName, email } });
+  } catch (error) {
     dispatch({
       type: USER_AUTH_FAIL,
       payload:
@@ -30,16 +31,20 @@ export const register = (name, email, password) => async (dispatch) => {
     dispatch({ type: USER_AUTH_REQUEST });
 
     const response = await auth.createUserWithEmailAndPassword(email, password);
-    response.user.updateProfile({ name });
+    response.user.updateProfile({ displayName: name });
 
     const { uid } = response;
 
-    await firestore.collection("users").doc(uid).set({ name, email, uid });
+    await firestore
+      .collection("users")
+      .doc(email)
+      .set({ displayName: name, email: email });
 
-    dispatch({ type: USER_AUTH_SUCCESS, payload: { name, email, uid } });
-
-    dispatch({ type: USER_AUTH_SUCCESS, payload: userRecord });
-  } catch (err) {
+    dispatch({
+      type: USER_AUTH_SUCCESS,
+      payload: { displayName: name, email, uid },
+    });
+  } catch (error) {
     dispatch({
       type: USER_AUTH_FAIL,
       payload:

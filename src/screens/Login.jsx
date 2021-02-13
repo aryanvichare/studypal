@@ -1,9 +1,18 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/actions/userActions";
 import globe from "../assets/globe.gif";
 
 const LoginScreen = () => {
   let form = useRef(null);
+
+  const AUTH_KEYS = {
+    EMAIL: "email",
+    PASSWORD: "password",
+  };
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -12,7 +21,10 @@ const LoginScreen = () => {
     form_data.forEach(function (value, key) {
       payload[key] = value;
     });
-    console.log("payload", payload);
+
+    dispatch(
+      login(payload[AUTH_KEYS["EMAIL"]], payload[AUTH_KEYS["PASSWORD"]])
+    );
   };
 
   return (

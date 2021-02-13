@@ -1,9 +1,19 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { register } from "../redux/actions/userActions";
 import globe from "../assets/globe.gif";
 
 const SignUpScreen = () => {
   let form = useRef(null);
+
+  const dispatch = useDispatch();
+
+  const AUTH_KEYS = {
+    NAME: "name",
+    EMAIL: "email",
+    PASSWORD: "password",
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -12,7 +22,13 @@ const SignUpScreen = () => {
     form_data.forEach(function (value, key) {
       payload[key] = value;
     });
-    console.log("payload", payload);
+    dispatch(
+      register(
+        payload[AUTH_KEYS["NAME"]],
+        payload[AUTH_KEYS["EMAIL"]],
+        payload[AUTH_KEYS["PASSWORD"]]
+      )
+    );
   };
 
   return (
@@ -136,7 +152,7 @@ const SignUpScreen = () => {
                 </label>
                 <input
                   required
-                  name='text'
+                  name='name'
                   id='text'
                   className='h-10 px-2 w-full rounded mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 border-gray-300 border shadow'
                   type='text'
