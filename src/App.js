@@ -4,15 +4,11 @@ import "./App.css";
 import React, { useEffect } from "react";
 import { FileUploader } from "baseui/file-uploader";
 
-import { Client as Styletron } from 'styletron-engine-atomic';
-import { Provider as StyletronProvider } from 'styletron-react';
-import { LightTheme, BaseProvider } from 'baseui';
+import { Client as Styletron } from "styletron-engine-atomic";
+import { Provider as StyletronProvider } from "styletron-react";
+import { LightTheme, BaseProvider } from "baseui";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "./firebase/firebase.config";
 import LoginScreen from "./screens/Login";
@@ -24,7 +20,6 @@ import {
 } from "./redux/constants/userConstants";
 
 const engine = new Styletron();
-
 
 function App() {
   const dispatch = useDispatch();
@@ -47,11 +42,11 @@ function App() {
     <Router>
       <StyletronProvider value={engine}>
         <BaseProvider theme={LightTheme}>
-            <Switch>
-              <Route exact path='/' component={LoginScreen}></Route>
-              <Route exact path='/register' component={SignUpScreen}></Route>
-              <Route exact path='/home' component={HomeScreen}></Route>
-            </Switch>
+          <Switch>
+            <Route exact path='/' component={HomeScreen}></Route>
+            <Route exact path='/login' component={LoginScreen}></Route>
+            <Route exact path='/register' component={SignUpScreen}></Route>
+          </Switch>
         </BaseProvider>
       </StyletronProvider>
     </Router>

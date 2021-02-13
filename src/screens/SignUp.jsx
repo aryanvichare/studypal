@@ -1,19 +1,27 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { register } from "../redux/actions/userActions";
 import globe from "../assets/globe.gif";
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ history }) => {
   let form = useRef(null);
 
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const { authenticated } = user;
 
   const AUTH_KEYS = {
     NAME: "name",
     EMAIL: "email",
     PASSWORD: "password",
   };
+
+  useEffect(() => {
+    if (authenticated) {
+      history.push("/");
+    }
+  }, [history, authenticated]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
