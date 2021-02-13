@@ -190,7 +190,7 @@ const SignUpScreen = () => {
               </button>
               <p className='mt-16 text-xs text-center'>
                 Already have an account?{" "}
-                <Link to='/' className='underline text-indigo-600'>
+                <Link to='/login' className='underline text-indigo-600'>
                   Login
                 </Link>
               </p>
