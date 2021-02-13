@@ -68,22 +68,28 @@ export const upload = (file) => async (dispatch) => {
       throw 'Not logged in';
     }
 
-    const fileName = `${new Date().getTime()}-${file.name}`;
+    const fileName = file.name;
+    if (!fileName) {
+      throw 'No file';
+    }
 
-    const uploadTask = storage.ref().child(`files/${fbUser.email}/${fileName}`).put(file);
+    const timestamp = new Date().getTime();
+    const uploadName = `${timestamp}-${fileName}`;
+
+    const uploadTask = storage.ref().child(`files/${fbUser.email}/${uploadName}`).put(file);
     const snapshot = await uploadTask;
     const downloadUrl = await snapshot.ref.getDownloadURL();
     console.log(`downloadUrl: ${downloadUrl}`);
 
     await files
-      .doc(fileName)
+      .doc(uploadName)
       .set({ owner: fbUser.email, path: downloadUrl })
 
     await users.doc(fbUser.email).update({
-      files: firebase.firestore.FieldValue.arrayUnion(downloadUrl)
+      files: firebase.firestore.FieldValue.arrayUnion({fileName, downloadUrl, 'uploadTime': timestamp})
     });
     
-    dispatch({ type: USER_UPLOAD_SUCCESS, payload: { fileName, downloadUrl} });
+    dispatch({ type: USER_UPLOAD_SUCCESS, payload: { uploadName, downloadUrl} });
   } catch (error) {
     dispatch({ 
       type: USER_UPLOAD_FAIL,

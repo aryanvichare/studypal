@@ -35,9 +35,9 @@ const FileList = () => {
         paddingRight: 0,
       })}
     >
-      {files.map(file => <ListItem>
-        <a href={file}><ListItemLabel>{file}</ListItemLabel></a>
-      </ListItem>)}
+      {files ? files.map(({fileName, downloadUrl, uploadTime}) => <ListItem key={uploadTime}>
+        <a href={downloadUrl}><ListItemLabel>{`${uploadTime} - ${fileName}`}</ListItemLabel></a>
+      </ListItem>) : null}
     </ul>
   );
 }
