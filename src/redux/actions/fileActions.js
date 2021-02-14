@@ -12,6 +12,22 @@ const getError = (error) =>
     ? error.response.data.message
     : error.message) || error;
 
+
+export const processNLP = async (fileUrl) => {
+  const file = await firestore.collection('files').doc(fileUrl).get();
+
+  if (file.exists) {
+    const result = await file.data();
+    if (result.keywords)
+      return {'keyWords': result.keywords, 'transcription': result.transcription}
+  }
+
+  const url = QUIZ_API + fileUrl;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
 export const requestNLP = (fileUrl) => async (dispatch) => {
   try {
     dispatch({ type: FILE_NLP_REQUEST });
@@ -21,9 +37,7 @@ export const requestNLP = (fileUrl) => async (dispatch) => {
       throw "No file";
     }
 
-    const url = QUIZ_API + fileUrl;
-    const response = await fetch(url);
-    const data = await response.json();
+    const data = processNLP(fileUrl);
 
     dispatch({
       type: FILE_NLP_SUCCESS,

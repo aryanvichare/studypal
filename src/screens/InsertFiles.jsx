@@ -5,7 +5,7 @@ import { useStyletron } from "baseui";
 
 import { useDispatch, useSelector } from "react-redux";
 import { upload } from "../redux/actions/userActions";
-import { requestNLP } from "../redux/actions/fileActions";
+import { requestNLP, processNLP } from "../redux/actions/fileActions";
 
 export const Uploader = () => {
   const [trigger, setTrigger] = useState(false);
@@ -46,9 +46,45 @@ export const Uploader = () => {
   );
 };
 
+const FileListItem = (props) => {
+  const [nlp, setNlp] = useState(null);
+  const [showNlp, setShowNlp] = useState(null);
+
+  const { arg, idx } = props;
+  if (!arg) {
+    return null;
+  }
+  const { fileName, downloadUrl, timestamp } = arg;
+
+  const makeRequest = (fileName, idx) => {
+    processNLP(fileName)
+      .then(({ transcription, keyWords }) => {
+        setNlp(keyWords);
+      });
+  }
+
+  return (
+    <div key={`${timestamp}-${fileName}`} className='my-4'>
+      <ListItem>
+        <img
+          className='w-12 object-cover mr-4'
+          src={downloadUrl}
+          alt=''
+        />
+        <a href={downloadUrl}>
+          <ListItemLabel>{`${new Date(timestamp)} - ${fileName}`}</ListItemLabel>
+        </a>
+        {nlp ? <>
+          <div style={{ display: showNlp ? 'block' : 'none', position: 'absolute', zIndex: 1 }}>{nlp.map(keyWord => <p key={keyWord.name}>{keyWord.name}</p>)}</div>
+          <button onClick={() => setShowNlp(!showNlp)}>Toggle</button></> :
+          <button onClick={() => makeRequest(`${timestamp}-${fileName}`, idx)}>Request NLP</button>}
+      </ListItem>
+    </div>
+  );
+}
+
 export const FileList = () => {
   const [css] = useStyletron();
-  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
 
   if (!userInfo) {
@@ -56,6 +92,9 @@ export const FileList = () => {
   }
 
   const { files } = userInfo;
+
+
+
   return (
     <ul
       className={css({
@@ -64,30 +103,7 @@ export const FileList = () => {
         paddingRight: 0,
       })}>
       {files
-        ? files.map(({ fileName, downloadUrl, uploadTime }) => (
-            <div key={`${uploadTime}-${fileName}`} className='my-4'>
-              <ListItem>
-                <img
-                  onClick={() => window.open(downloadUrl)}
-                  className='w-12 object-cover mr-4 cursor-pointer'
-                  src={downloadUrl}
-                  alt=''
-                />
-                <a href={downloadUrl}>
-                  <ListItemLabel>{`${new Date(
-                    uploadTime
-                  )} - ${fileName}`}</ListItemLabel>
-                </a>
-                <button
-                  onClick={() =>
-                    dispatch(requestNLP(`${uploadTime}-${fileName}`))
-                  }>
-                  Request NLP
-                </button>
-              </ListItem>
-            </div>
-          ))
-        : null}
+        ? files.map((arg, idx) => <FileListItem  key={`${idx}-${arg.timestamp}-${arg.fileName}`} {...{ arg, idx }} />) : null}
     </ul>
   );
 };
