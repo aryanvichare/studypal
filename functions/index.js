@@ -22,18 +22,18 @@ const runSTT = async fileItem => {
   // const sampleRateHertz = 16000;
   // const languageCode = 'BCP-47 language code, e.g. en-US';
 
- /*const config = {
-    encoding: encoding,
-    sampleRateHertz: sampleRateHertz,
-    languageCode: languageCode,
-  };*/
+ const config = {
+    encoding: "LINEAR16",
+    //sampleRateHertz: 16000,
+    languageCode: "en-US",
+  };
 
   const audio = {
     uri: gcsUri,
   };
 
   const request = {
-    //config: config,
+    config: config,
     audio: audio,
   };
 
@@ -46,7 +46,7 @@ const runSTT = async fileItem => {
     .map(result => result.alternatives[0].transcript)
     .join('\n');
   console.log(`Transcription: ${transcription}`);
-  fileItem.update({
+  files.doc(`${id}`).update({
     'content': transcription
   });
   return transcription;
@@ -71,13 +71,3 @@ exports.triggerSTT = functions.https.onRequest(async (req, res) => {
 
   res.json({result: `Triggered with ID: ${fileId} - ${transcription}`});
 });
-
-
-exports.onFileCreated = functions.firestore.document('/files/{documentId}')
-    .onCreate((snap, context) => {
-      functions.logger.log('onFileCreated', context.params.documentId, snap.data());
-      
-      runSTT(snap);
-
-      return null;
-    });
