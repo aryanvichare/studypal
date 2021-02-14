@@ -54,7 +54,7 @@ const FileListItem = (props) => {
   if (!arg) {
     return null;
   }
-  const { fileName, downloadUrl, timestamp } = arg;
+  const { fileName, downloadUrl, timestamp, uploadTime } = arg;
 
   const makeRequest = (fileName, idx) => {
     processNLP(fileName)
@@ -64,7 +64,7 @@ const FileListItem = (props) => {
   }
 
   return (
-    <div key={`${timestamp}-${fileName}`} className='my-4'>
+    <div key={`${timestamp || uploadTime}-${fileName}`} className='my-4'>
       <ListItem>
         <img
           className='w-12 object-cover mr-4'
@@ -72,12 +72,14 @@ const FileListItem = (props) => {
           alt=''
         />
         <a href={downloadUrl}>
-          <ListItemLabel>{`${new Date(timestamp)} - ${fileName}`}</ListItemLabel>
+          <ListItemLabel>{`${new Date(timestamp || uploadTime)} - ${fileName}`}</ListItemLabel>
         </a>
         {nlp ? <>
-          <div style={{ display: showNlp ? 'block' : 'none', position: 'absolute', zIndex: 1 }}>{nlp.map(keyWord => <p key={keyWord.name}>{keyWord.name}</p>)}</div>
+          <div style={{ display: showNlp ? 'block' : 'none', position: 'absolute', zIndex: 1, 'background': 'white'}}>
+            {nlp.map((keyWord, idx) => <p key={keyWord.name}>{`${idx}. ${keyWord.name}`}</p>)}
+          </div>
           <button onClick={() => setShowNlp(!showNlp)}>Toggle</button></> :
-          <button onClick={() => makeRequest(`${timestamp}-${fileName}`, idx)}>Request NLP</button>}
+          <button onClick={() => makeRequest(`${timestamp || uploadTime}-${fileName}`, idx)}>Request NLP</button>}
       </ListItem>
     </div>
   );
