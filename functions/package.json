@@ -3,20 +3,16 @@
   "description": "Cloud Functions for Firebase",
   "scripts": {
     "serve": "firebase emulators:start --only functions",
-    "debug": "firebase emulators:start --inspect-functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log",
-    "lint": "eslint .\\"
+    "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "14"
+    "node": "12"
   },
   "main": "index.js",
   "dependencies": {
-    "@google-cloud/speech": "^4.2.0",
-    "eslint": "^7.20.0",
     "firebase-admin": "^9.2.0",
     "firebase-functions": "^3.11.0"
   },

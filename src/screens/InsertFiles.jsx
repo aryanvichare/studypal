@@ -5,6 +5,7 @@ import { useStyletron } from "baseui";
 
 import { useDispatch, useSelector } from "react-redux";
 import { upload } from "../redux/actions/userActions";
+import { requestNLP } from "../redux/actions/fileActions";
 
 export const Uploader = () => {
   const [trigger, setTrigger] = useState(false);
@@ -48,6 +49,7 @@ export const Uploader = () => {
 
 export const FileList = () => {
   const [css] = useStyletron();
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
 
   if (!userInfo) {
@@ -72,8 +74,9 @@ export const FileList = () => {
                   alt=''
                 />
                 <a href={downloadUrl}>
-                  <ListItemLabel>{`${uploadTime} - ${fileName}`}</ListItemLabel>
+                  <ListItemLabel>{`${new Date(uploadTime)} - ${fileName}`}</ListItemLabel>
                 </a>
+                <button onClick={() => dispatch(requestNLP(`${downloadUrl}`))}>Request NLP</button>
               </ListItem>
             </div>
           ))
