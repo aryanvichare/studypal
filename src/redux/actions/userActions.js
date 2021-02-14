@@ -112,6 +112,15 @@ export const upload = (file) => async (dispatch) => {
       type: USER_UPLOAD_SUCCESS,
       payload: { uploadName, downloadUrl },
     });
+
+    // Prod the page to reload
+
+    const userPayload = await firestore
+          .collection("users")
+          .doc(fbUser.email)
+          .get();
+
+    dispatch({ type: USER_AUTH_REHYDRATE, payload: userPayload.data() });
   } catch (error) {
     dispatch({
       type: USER_UPLOAD_FAIL,
