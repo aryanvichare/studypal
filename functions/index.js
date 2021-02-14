@@ -113,6 +113,11 @@ const keyWordAnalysis = async (fileItem, text = null) => {
 };
 
 exports.triggerSTT = functions.https.onRequest(async (req, res) => {
+  if (req.method === 'OPTIONS') {
+    res.set('Access-Control-Allow-Origin', "*")
+    res.set('Access-Control-Allow-Methods', 'GET, POST')
+    return res.status(204).send('');
+  }
 
   const fileId = req.query.fileId;
 
