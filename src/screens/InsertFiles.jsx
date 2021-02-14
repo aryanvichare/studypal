@@ -76,7 +76,7 @@ export const FileList = () => {
                 <a href={downloadUrl}>
                   <ListItemLabel>{`${new Date(uploadTime)} - ${fileName}`}</ListItemLabel>
                 </a>
-                <button onClick={() => dispatch(requestNLP(`${downloadUrl}`))}>Request NLP</button>
+                <button onClick={() => dispatch(requestNLP(`${uploadTime}-${fileName}`))}>Request NLP</button>
               </ListItem>
             </div>
           ))

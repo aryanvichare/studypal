@@ -2,6 +2,7 @@ const functions = require("firebase-functions");
 const admin = require('firebase-admin');
 const speech = require('@google-cloud/speech');
 const language = require('@google-cloud/language');
+const vision = require('@google-cloud/vision');
 
 admin.initializeApp();
 
@@ -9,6 +10,28 @@ const files = admin.firestore().collection('files');
 
 const speechClient = new speech.SpeechClient();
 const languageClient = new language.LanguageServiceClient();
+const visionClient = new vision.ImageAnnotatorClient();
+
+const runOCR = async fileItem => {
+  const { id } = fileItem;
+  const { owner } = fileItem.data()
+  const gcsUri = `gs://studypal-f122c.appspot.com/files/${owner}/${id}`;
+  functions.logger.log('Running Optical character recognition', fileItem, gcsUri);
+
+  const [result] = await visionClient.textDetection(gcsUri);
+  const detections = result.textAnnotations;
+  let transcription = '';
+  console.log('Text:');
+  detections.forEach(text => {
+    console.log(text);
+    if (text.description)
+      transcription += ` ${text.description}`;
+  });
+
+  console.log(`Transcription: ${transcription}`);
+  const keyWords = await keyWordAnalysis(fileItem, transcription);
+  return {transcription, keyWords};
+}
 
 const runSTT = async fileItem => {
   const { id } = fileItem;
@@ -51,8 +74,8 @@ const runSTT = async fileItem => {
   /*files.doc(`${id}`).update({
     'transcription': transcription
   });*/
-  await keyWordAnalysis(fileItem, transcription);
-  return transcription;
+  const keyWords = await keyWordAnalysis(fileItem, transcription);
+  return {transcription, keyWords};
 }
 
 const keyWordAnalysis = async (fileItem, text = null) => {
@@ -94,22 +117,18 @@ exports.triggerSTT = functions.https.onRequest(async (req, res) => {
   const fileId = req.query.fileId;
 
   if (!fileId) {
-    res.json({ result: `You didn't specify a fileId` });
-    return;
-  }
-
-  if (!fileId.endsWith('.wav')) {
-    res.json({ result: `This is not a wav file` });
-    return;
+    return res.json({ result: `You didn't specify a fileId` }).status(400);
   }
 
   const file = await files.doc(`${fileId}`).get();
 
   if (!file.exists) {
-    res.json({ result: `File not found ${fileId}` });
+    return res.json({ result: `File not found ${fileId}` }).status(404);
   }
 
-  const transcription = await runSTT(file)
+  const result = await (fileId.endsWith('.wav') ? runSTT(file) : runOCR(file));
 
-  res.json({ result: `Triggered with ID: ${fileId} - ${transcription}` });
+  res.set('Access-Control-Allow-Origin', "*")
+  res.set('Access-Control-Allow-Methods', 'GET, POST')
+  res.json({ result });
 });

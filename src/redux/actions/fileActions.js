@@ -2,11 +2,10 @@ import firebase, {
   firestore
 } from "../../firebase/firebase.config";
 
-import axios from 'axios';
 
 import { FILE_NLP_FAILED, FILE_NLP_REQUEST, FILE_NLP_SUCCESS, FILE_UPLOAD_FAILED, FILE_UPLOAD_REQUEST, FILE_UPLOAD_SUCCESS } from '../constants/fileConstants';
 
-const QUIZ_API = 'http://83c97b0044dc.ngrok.io/generatequiz';
+const QUIZ_API = 'https://us-central1-studypal-f122c.cloudfunctions.net/triggerSTT?fileId=';
 
 const getError = (error) =>
   (error.response && error.response.data.message
@@ -22,7 +21,8 @@ export const requestNLP = (fileUrl) => async (dispatch) => {
       throw "No file";
     }
 
-    const response = await axios.post(QUIZ_API, fileUrl);
+    const url = QUIZ_API + fileUrl;
+    const response = await fetch(url);
     const data = await response.json();
 
     dispatch({
