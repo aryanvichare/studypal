@@ -39,6 +39,7 @@ const LandingScreen = () => {
           <div className='h-0 w-0 lg:w-56 lg:h-56 rounded-full bg-blue-500 overflow-hidden'></div>
         </div>
       </div>
+      {/* <CreateStudyGuideModal /> */}
     </React.Fragment>
   );
 };

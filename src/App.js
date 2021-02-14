@@ -11,6 +11,7 @@ import {
   Switch,
   Route,
   Redirect,
+  withRouter,
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { auth, firestore } from "./firebase/firebase.config";
@@ -25,6 +26,7 @@ import LandingScreen from "./screens/Landing";
 import DashboardScreen from "./screens/Dashboard";
 import ProfileScreen from "./screens/Profile";
 import CommunityScreen from "./screens/Community";
+import GuideScreen from "./screens/GuideScreen";
 
 const engine = new Styletron();
 
@@ -35,7 +37,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        authenticated ? <Component {...props} /> : <Redirect to='/' />
+        authenticated ? <Component {...props} /> : <Redirect to='/login' />
       }
     />
   );
@@ -76,6 +78,10 @@ function App() {
               exact
               path='/dashboard/profile'
               component={ProfileScreen}></PrivateRoute>
+            <PrivateRoute
+              exact
+              path='/dashboard/guide/:id'
+              component={GuideScreen}></PrivateRoute>
             <PrivateRoute
               exact
               path='/dashboard/community'

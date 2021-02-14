@@ -1,3 +1,7 @@
 .aj {
   border-radius: 20px;
 }
+
+.bg-smoke {
+  background-color: rgba(0, 0, 0, 0.4);
+}

@@ -5,12 +5,10 @@ import logo from "../assets/logo.png";
 const Sidebar = ({ index }) => {
   return (
     <div class='absolute z-20 sm:relative md:w-4/12 lg:w-72 pl-4 sm:pl-2 md:pl-4 bg-white md:shadow h-screen'>
-      <div className='flex items-center cursor-pointer'>
-        <Link to='/'>
-          <img class='h-16 w-16' src={logo} alt='StudyPal Logo' />
-        </Link>
+      <Link to='/' className='flex items-center cursor-pointer'>
+        <img class='h-16 w-16' src={logo} alt='StudyPal Logo' />
         <h1 class='text-xl font-bold text-indigo-700'>StudyPal</h1>
-      </div>
+      </Link>
       <ul aria-orientation='vertical' class='rounded py-8 hidden sm:block'>
         <li
           class={`cursor-pointer text-indigo-400 ${
@@ -80,7 +78,7 @@ const Sidebar = ({ index }) => {
               />
             </svg>
             <Link to='/dashboard/profile'>
-              <span class='ml-2'>Your Profile</span>
+              <span class='ml-2'>My Profile</span>
             </Link>
           </div>
         </li>

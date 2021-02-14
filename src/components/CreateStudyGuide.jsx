@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import InsertFiles, { Uploader } from "../screens/InsertFiles";
 import DashboardNavigation from "./DashboardNavigation";
 import { useSelector } from "react-redux";
+import CreateStudyGuideModal from "../components/CreateStudyGuideModal";
 
 const SupportedFileFormatList = () => {
   return (
@@ -18,7 +19,9 @@ const SupportedFileFormatList = () => {
   );
 };
 
-const CreateStudyGuide = () => {
+const CreateStudyGuide = ({ history }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   const user = useSelector((state) => state.user);
   const {
     userInfo: { files },
@@ -45,12 +48,17 @@ const CreateStudyGuide = () => {
             <InsertFiles />
           </div>
           {files.length > 0 && (
-            <button className='ml-2 inline-block mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md'>
+            <button
+              onClick={() => setModalOpen(true)}
+              className='ml-2 inline-block mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md'>
               Create Study Guide
             </button>
           )}
         </div>
       </div>
+      {modalOpen && (
+        <CreateStudyGuideModal history={history} setModalOpen={setModalOpen} />
+      )}
     </div>
   );
 };
