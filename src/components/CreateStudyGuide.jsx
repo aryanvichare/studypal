@@ -7,11 +7,15 @@ import CreateStudyGuideModal from "../components/CreateStudyGuideModal";
 const SupportedFileFormatList = () => {
   return (
     <ul className='inline-flex flex-row space-x-2'>
-      <li className='text-red-700 bg-red-300 text-sm px-2 rounded-full'>.png</li>
+      <li className='text-red-700 bg-red-300 text-sm px-2 rounded-full'>
+        .png
+      </li>
       <li className='text-green-700 bg-green-300 text-sm px-2 rounded-full'>
         .jpg
       </li>
-      <li className='text-blue-700 bg-blue-300 text-sm px-2 rounded-full'>.jpeg</li>
+      <li className='text-blue-700 bg-blue-300 text-sm px-2 rounded-full'>
+        .jpeg
+      </li>
       <li className='text-purple-700 bg-purple-300 text-sm px-2 rounded-full'>
         .pdf
       </li>
@@ -50,7 +54,7 @@ const CreateStudyGuide = ({ history }) => {
           <div className='my-8'>
             <InsertFiles />
           </div>
-          {files.length > 0 && (
+          {files && files.length > 0 && (
             <button
               onClick={() => setModalOpen(true)}
               className='ml-2 inline-block mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md'>

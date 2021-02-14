@@ -14,7 +14,6 @@ export const Uploader = () => {
   const uploadFile = (file) => {
     console.log(file);
     dispatch(upload(file[0]));
-    setTrigger(true);
   };
 
   const [errorMessage, setErrorMessage] = React.useState("");
@@ -69,14 +68,22 @@ export const FileList = () => {
             <div key={`${uploadTime}-${fileName}`} className='my-4'>
               <ListItem>
                 <img
-                  className='w-12 object-cover mr-4'
+                  onClick={() => window.open(downloadUrl)}
+                  className='w-12 object-cover mr-4 cursor-pointer'
                   src={downloadUrl}
                   alt=''
                 />
                 <a href={downloadUrl}>
-                  <ListItemLabel>{`${new Date(uploadTime)} - ${fileName}`}</ListItemLabel>
+                  <ListItemLabel>{`${new Date(
+                    uploadTime
+                  )} - ${fileName}`}</ListItemLabel>
                 </a>
-                <button onClick={() => dispatch(requestNLP(`${uploadTime}-${fileName}`))}>Request NLP</button>
+                <button
+                  onClick={() =>
+                    dispatch(requestNLP(`${uploadTime}-${fileName}`))
+                  }>
+                  Request NLP
+                </button>
               </ListItem>
             </div>
           ))

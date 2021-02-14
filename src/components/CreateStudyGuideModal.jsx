@@ -10,7 +10,6 @@ const CreateStudyGuideModal = ({ history, setModalOpen }) => {
   };
 
   const handleSubmit = (e) => {
-    console.log(text);
     // do async stuff here ==> get db object id and plug in here
     history.push("/dashboard/guide/CNyyz2UtP1rZeCbm1R00");
   };
