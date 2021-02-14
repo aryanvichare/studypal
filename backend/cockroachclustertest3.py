@@ -175,8 +175,8 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     # conn = psycopg2.connect(opt.dsn)
-    # conn = psycopg2.connect("postgres://muntaser:rootpassword@free-tier.gcp-us-central1.cockroachlabs.cloud:26257/defaultdb?sslmode=require&options=--cluster=nifty-puma-91")
-    conn=psycopg2.connect("dbname='nifty-puma-91.defaultdb' user='muntaser' password='rootpassword' host='free-tier.gcp-us-central1.cockroachlabs.cloud' port='26257'")
+    # conn = psycopg2.connect("postgres://muntaser:geturown@free-tier.gcp-us-central1.cockroachlabs.cloud:26257/defaultdb?sslmode=require&options=--cluster=nifty-puma-91")
+    conn=psycopg2.connect("dbname='nifty-puma-91.defaultdb' user='muntaser' password='getyourpwnpassword' host='free-tier.gcp-us-central1.cockroachlabs.cloud' port='26257'")
 ##    delete_users(conn)
     create_users(conn)
     print_names(conn)
@@ -236,5 +236,5 @@ def parse_cmdline():
 if __name__ == "__main__":
     main()
 
-## postgres://rootuser:rootpassword@weary-ox-66d.gcp-us-east1.cockroachlabs.cloud:26257/defaultdb?sslmode=require
+## postgres://rootuser:redacted@weary-ox-66d.gcp-us-east1.cockroachlabs.cloud:26257/defaultdb?sslmode=require
 ## postgres://muntaser@free-tier.gcp-us-central1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&sslrootcert=<your_certs_directory>/cc-ca.crt&options=--cluster=nifty-puma-91
