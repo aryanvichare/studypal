@@ -5,3 +5,10 @@
 .bg-smoke {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+.bg-mask {
+  background-color: rgba(129, 61, 236, 1);
+  background-image: url("../assets/bg-mask.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

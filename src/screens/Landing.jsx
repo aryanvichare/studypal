@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import heroAnimation from "../assets/app-animate.json";
 import LottieAnimation from "../components/LottieAnimation";
@@ -22,9 +23,11 @@ const LandingScreen = () => {
                   assumenda sunt facere fugit corporis eius exercitationem
                   nostrum quo voluptate, nemo odit reprehenderit.
                 </p>
-                <button className='inline-block mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md'>
-                  Get Started
-                </button>
+                <Link to='/dashboard'>
+                  <button className='inline-block mt-4 bg-indigo-600 text-white px-4 py-2 rounded-md'>
+                    Get Started
+                  </button>
+                </Link>
               </div>
             </div>
             <div className='w-full overflow-hidden lg:w-1/2 cursor-default'>
