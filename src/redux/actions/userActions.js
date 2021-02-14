@@ -83,7 +83,7 @@ export const upload = (file) => async (dispatch) => {
 
     await files
       .doc(uploadName)
-      .set({ owner: fbUser.email, path: downloadUrl })
+      .set({ owner: fbUser.email, path: downloadUrl, fileName })
 
     await users.doc(fbUser.email).update({
       files: firebase.firestore.FieldValue.arrayUnion({fileName, downloadUrl, 'uploadTime': timestamp})

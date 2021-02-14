@@ -11,21 +11,21 @@ const Navbar = () => {
     <nav className='w-full'>
       <div className='container mx-auto px-6 flex items-center justify-between'>
         <div className='flex items-center'>
-          <img class='h-24 w-24' src={logo} alt='StudyPal Logo' />
-          <h1 class='text-3xl font-bold text-indigo-700'>StudyPal</h1>
+          <img className='h-24 w-24' src={logo} alt='StudyPal Logo' />
+          <h1 className='text-3xl font-bold text-indigo-700'>StudyPal</h1>
         </div>
         <ul className='hidden sm:flex items-center py-8'>
-          <li class='text-gray-600 hover:text-indigo-600 cursor-pointer text-base ml-10'>
+          <li className='text-gray-600 hover:text-indigo-600 cursor-pointer text-base ml-10'>
             About
           </li>
-          <li class='text-gray-600 hover:text-indigo-600 cursor-pointer text-base ml-10'>
+          <li className='text-gray-600 hover:text-indigo-600 cursor-pointer text-base ml-10'>
             Features
           </li>
           {authenticated ? (
             <Link to='/dashboard'>
-              <li class='flex items-center text-gray-600 hover:text-indigo-600 cursor-pointer text-base ml-10'>
+              <li className='flex items-center text-gray-600 hover:text-indigo-600 cursor-pointer text-base ml-10'>
                 <svg
-                  class='inline w-5 h-5 mr-1'
+                  className='inline w-5 h-5 mr-1'
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
                   viewBox='0 0 24 24'
@@ -42,7 +42,7 @@ const Navbar = () => {
             </Link>
           ) : (
             <Link to='/login'>
-              <li class='text-gray-600 hover:text-indigo-600 cursor-pointer text-base ml-10'>
+              <li className='text-gray-600 hover:text-indigo-600 cursor-pointer text-base ml-10'>
                 Log In
               </li>
             </Link>
