@@ -11,10 +11,10 @@ const Sidebar = ({ index }) => {
       </Link>
       <ul aria-orientation='vertical' class='rounded py-8 hidden sm:block'>
         <li
-          class={`cursor-pointer text-indigo-400 ${
+          className={`cursor-pointer text-indigo-400 ${
             index === 1 ? "font-bold text-indigo-800" : ""
           } text-xs xl:text-sm leading-3 tracking-normal pl-2 py-2 hover:text-indigo-800 focus:outline-none`}>
-          <div class='flex items-center'>
+          <div className='flex items-center'>
             <svg
               width='20'
               height='20'
@@ -30,15 +30,15 @@ const Sidebar = ({ index }) => {
               />
             </svg>
             <Link to='/dashboard'>
-              <span class='ml-2'>Create Study Guide</span>
+              <span className='ml-2'>Create Study Guide</span>
             </Link>
           </div>
         </li>
         <li
-          class={`cursor-pointer text-indigo-400 ${
+          className={`cursor-pointer text-indigo-400 ${
             index === 2 ? "font-bold text-indigo-800" : ""
           } text-xs xl:text-sm leading-3 tracking-normal mt-6 pl-2 py-2 hover:text-indigo-800 focus:outline-none`}>
-          <div class='flex items-center'>
+          <div className='flex items-center'>
             <svg
               width='20'
               height='20'
@@ -54,15 +54,15 @@ const Sidebar = ({ index }) => {
               />
             </svg>
             <Link to='/dashboard/community'>
-              <span class='ml-2'>Community Study Guides</span>
+              <span className='ml-2'>Community Study Guides</span>
             </Link>
           </div>
         </li>
         <li
-          class={`cursor-pointer text-indigo-400 ${
+          className={`cursor-pointer text-indigo-400 ${
             index === 3 ? "font-bold text-indigo-800" : ""
           } text-xs xl:text-sm leading-3 tracking-normal mt-6 pl-2 py-2 hover:text-indigo-800 focus:outline-none`}>
-          <div class='flex items-center'>
+          <div className='flex items-center'>
             <svg
               width='20'
               height='20'

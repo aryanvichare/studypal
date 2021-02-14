@@ -6,14 +6,17 @@ import CreateStudyGuideModal from "../components/CreateStudyGuideModal";
 
 const SupportedFileFormatList = () => {
   return (
-    <ul class='inline-flex flex-row space-x-2'>
-      <li class='text-red-700 bg-red-300 text-sm px-2 rounded-full'>.png</li>
-      <li class='text-green-700 bg-green-300 text-sm px-2 rounded-full'>
+    <ul className='inline-flex flex-row space-x-2'>
+      <li className='text-red-700 bg-red-300 text-sm px-2 rounded-full'>.png</li>
+      <li className='text-green-700 bg-green-300 text-sm px-2 rounded-full'>
         .jpg
       </li>
-      <li class='text-blue-700 bg-blue-300 text-sm px-2 rounded-full'>.jpeg</li>
-      <li class='text-purple-700 bg-purple-300 text-sm px-2 rounded-full'>
+      <li className='text-blue-700 bg-blue-300 text-sm px-2 rounded-full'>.jpeg</li>
+      <li className='text-purple-700 bg-purple-300 text-sm px-2 rounded-full'>
         .pdf
+      </li>
+      <li className='text-yellow-700 bg-yellow-300 text-sm px-2 rounded-full'>
+        .wav
       </li>
     </ul>
   );
@@ -28,10 +31,10 @@ const CreateStudyGuide = ({ history }) => {
   } = user;
 
   return (
-    <div class='w-full'>
+    <div className='w-full'>
       <DashboardNavigation title='Create Study Guide' />
       <div className='px-6 py-6'>
-        <div class='rounded shadow bg-white px-6 py-8'>
+        <div className='rounded shadow bg-white px-6 py-8'>
           <h1 className='text-2xl font-semibold mb-2'>
             Upload Images from your Textbook
           </h1>
@@ -39,7 +42,7 @@ const CreateStudyGuide = ({ history }) => {
             Please upload an image of your textbook or study material
           </p>
           <div className='mt-2'>
-            <span class='font-semibold text-md text-gray-400 mr-2'>
+            <span className='font-semibold text-md text-gray-400 mr-2'>
               * Supported Formats:
             </span>
             <SupportedFileFormatList />

@@ -61,6 +61,11 @@ exports.triggerSTT = functions.https.onRequest(async (req, res) => {
     return;
   }
 
+  if (!fileId.endsWith('.wav')) {
+    res.json({result: `This is not a wav file`});
+    return;
+  }
+
   const file = await files.doc(`${fileId}`).get();
 
   if (!file.exists) {

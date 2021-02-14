@@ -64,8 +64,8 @@ export const FileList = () => {
       })}>
       {files
         ? files.map(({ fileName, downloadUrl, uploadTime }) => (
-            <div key={fileName} className='my-4'>
-              <ListItem key={uploadTime}>
+            <div key={`${uploadTime}-${fileName}`} className='my-4'>
+              <ListItem>
                 <img
                   className='w-12 object-cover mr-4'
                   src={downloadUrl}
